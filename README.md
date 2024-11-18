@@ -78,12 +78,20 @@ Make sure you have the following tools installed and configured:
 ### 2️⃣ Spark Setup on EKS
 1. Deploy the Spark operator:  
    ```bash
+   # Deploy the spark image to ECR by running the spark-docker/Dockerfile
+   ./setup_prerequisites.sh
+   ./build_and_push_docker_images.sh
+   ./deploy_spark.sh
+   ```
+   OR
+   ```bash
    helm repo add bitnami https://charts.bitnami.com/bitnami  
    helm install spark bitnami/spark --namespace default \  
-       --set master.service.type=LoadBalancer \  
-       --set worker.replicas=3  
-   ```
-2. Confirm Spark deployment:  
+    --set master.service.type=LoadBalancer \  
+    --set worker.replicas=3 
+    ```
+
+3. Confirm Spark deployment:  
    ```bash
    kubectl get pods --all-namespaces  
    ```
