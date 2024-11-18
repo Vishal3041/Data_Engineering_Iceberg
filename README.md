@@ -156,7 +156,7 @@ Make sure you have the following tools installed and configured:
      ```
 ---
 
-## Output
+## Output (views created after querying)
 
 ![S3 Bucket](s3-output.png)  
 
