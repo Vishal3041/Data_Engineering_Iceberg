@@ -24,7 +24,7 @@ All components are deployed on a Kubernetes cluster managed via **AWS EKS**, wit
    - **Amazon RDS** serves as the Hive Metastore backend.
 
 ### 🗺️ Architecture Diagram
-![Architecture Diagram](Data_Pipeline_Flowchart_Spaced_Portrait.png)  
+![Architecture Diagram](Data_Pipeline_Flowchart.png)  
 
 
 ---
