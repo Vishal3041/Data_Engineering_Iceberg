@@ -158,5 +158,8 @@ try:
     top_ips_weekly.createOrReplaceTempView("top_ips_weekly_view")
     spark.sql("CREATE TABLE IF NOT EXISTS my_catalog.top_ips_weekly AS SELECT * FROM top_ips_weekly_view")
 
+    top_devices.createOrReplaceTempView("top_devices_view")
+    spark.sql("CREATE TABLE IF NOT EXISTS my_catalog.top_devices AS SELECT * FROM top_devices_view")
+
 except Exception as e:
     print(f"Error reading file: {e}")
