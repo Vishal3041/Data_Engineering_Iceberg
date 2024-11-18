@@ -154,9 +154,13 @@ Make sure you have the following tools installed and configured:
      ORDER BY week DESC, request_count DESC
      LIMIT 5
      ```
-
 ---
 
+## Output
+
+![S3 Bucket](s3-output.png)  
+
+---
 ## 🔍 Observability and Scaling
 
 ### Observability
