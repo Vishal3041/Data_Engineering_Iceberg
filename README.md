@@ -76,9 +76,15 @@ Make sure you have the following tools installed and configured:
    ```
 
 ### 2️⃣ Spark Setup on EKS
-1. Deploy the Spark operator:  
+1. Build and push the Spark Docker image to ECR:
    ```bash
-   # Deploy the spark image to ECR by running the spark-docker/Dockerfile
+   docker build -t spark-job .  
+   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 767397764346.dkr.ecr.us-east-1.amazonaws.com/spark-repo  
+   docker push 767397764346.dkr.ecr.us-east-1.amazonaws.com/spark-repo:latest  
+   ```
+   
+2. Deploy the Spark operator:  
+   ```bash
    ./setup_prerequisites.sh
    ./build_and_push_docker_images.sh
    ./deploy_spark.sh
@@ -97,13 +103,7 @@ Make sure you have the following tools installed and configured:
    ```
 
 ### 3️⃣ Data Processing
-1. Build and push the Spark Docker image:
-   ```bash
-   docker build -t spark-job .  
-   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 767397764346.dkr.ecr.us-east-1.amazonaws.com/spark-repo  
-   docker push 767397764346.dkr.ecr.us-east-1.amazonaws.com/spark-repo:latest  
-   ```
-2. Submit the Spark job:
+1. Submit the Spark job:
    ```bash
    kubectl apply -f spark-logs-transform.yaml  
    kubectl logs -f <spark-job-pod>  
