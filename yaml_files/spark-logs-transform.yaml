@@ -1,0 +1,42 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  name: spark-logs-transformation
+  namespace: default
+spec:
+  type: Python
+  mode: cluster
+  image: "767397764346.dkr.ecr.us-east-1.amazonaws.com/spark-repo:latest"
+  imagePullPolicy: Always
+  mainApplicationFile: "s3a://log-dataset-bucket/log-transformation.py"
+  sparkConf:
+    "spark.executor.instances": "3"
+    "spark.kubernetes.container.image": "767397764346.dkr.ecr.us-east-1.amazonaws.com/spark-repo:latest"
+    "spark.kubernetes.driver.pod.name": "spark-logs-transformation-driver"
+    "spark.hadoop.fs.s3a.aws.credentials.provider": "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
+  driver:
+    cores: 1
+    memory: 2g
+    envSecretKeyRefs:
+      AWS_ACCESS_KEY_ID:
+        name: aws-credentials
+        key: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY:
+        name: aws-credentials
+        key: AWS_SECRET_ACCESS_KEY
+  executor:
+    cores: 2
+    memory: 4g
+    envSecretKeyRefs:
+      AWS_ACCESS_KEY_ID:
+        name: aws-credentials
+        key: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY:
+        name: aws-credentials
+        key: AWS_SECRET_ACCESS_KEY
+  deps:
+    jars:
+      - "s3a://log-dataset-bucket/bash_scripts/aws-java-sdk-bundle-1.12.517.jar"
+      - "s3a://log-dataset-bucket/bash_scripts/hadoop-aws-3.3.4.jar"
+  restartPolicy:
+    type: OnFailure
